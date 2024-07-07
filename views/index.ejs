@@ -1,0 +1,120 @@
+<%- include('partials/header.ejs'); %>
+<main class="container">
+<header class="p-3">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" aria-label="Home" fill=#C80036 class="bi bi-book-half me-2 header_pop" viewBox="0 0 16 16">
+            <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+          </svg>
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a class="nav-link px-2 link-secondary">Sort by: </a></li>
+          <li><a href="/rating" class="nav-link px-2 link-body-emphasis header_pop">Rating</a></li>
+          <li><a href="/alphabetically" class="nav-link px-2 link-body-emphasis header_pop">Title(A-Z)</a></li>
+          <li>
+          <div class="dropdown text-end nav-link px-2 link-body-emphasis">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle header_pop" data-bs-toggle="dropdown" aria-expanded="false">
+              Genre
+            </a>
+            <ul class="dropdown-menu text-small" style="">
+              <li><a class="dropdown-item" href="/fiction">Fiction</a></li>
+              <li><a class="dropdown-item" href="/nonfiction">Non-Fiction</a></li>
+              <li><a class="dropdown-item" href="/autobiography">Autobiography</a></li>
+              <li><a class="dropdown-item" href="/selfhelp">Self-help</a></li>
+            </ul>
+          </div>
+        </li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 header_pop d-flex" role="search" action="/search" method="POST">
+          <div class="input-group">
+            <input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+</header>
+<header id="readers">
+    <h1 class="display-1">Reader's Paradise</h1>
+</header>
+
+<!--Landing-->
+<div class="px-4 py-5 my-4 text-center">
+ <h1 class="display-5 fw-bold text-body-emphasis">Welcome to Manisha's Book Showcase!</h1>
+  <div class="col-lg-7 mx-auto">
+    <p class="lead mb-4">
+      Hi! I've created a website that offers a curated collection of the recent books I've read, along with reviews, my notes, and ratings. Why? Because I forget, and I need to remember what I read and liked, and my opinions about them so that I can come across as a smart person. That's why I went through all this trouble.</p>
+      <p class="lead mb-4">
+      Now, I haven't added all the reviews yet as there's a lot. I'll do it slowly. But you can still browse through my collection and judge my choices. </p>
+      <p class="lead mb-4">
+      I've read many genres, from tough non-fiction reads like "Thinking, Fast and Slow" to all 6 books of the Fifty Shades collection (yes, there are 6! I bet you weren't aware of that). Though I'm not proud of all my choices, it makes for an interesting showcase.</p>
+      <p class="lead mb-4">Now, I'm no literary genius. Take suggestions at your own risk; the ratings and reviews are purely my personal opinion. Enjoy exploring my book world, and happy reading!</p>
+  </div>
+</div>
+<!--Books-->
+<div class="container">
+  <% if (typeof isbn !== 'undefined' && isbn.length > 0) { %>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-2 g-md-3">
+      <% for(var i=0; i<isbn.length; i++) { %>
+        <div class="col">
+          <% if(isbn[i]!=-1){ %>
+          <a href="/details?isbn=<%= isbn[i] %>" class="card-link">
+            <% } else { %>
+              <a href="/details?isbn=<%= localISBN[i] %>" class="card-link">
+          <% } %>
+          <div class="card h-100">
+            <% if(isbn[i]!=-1){ %>
+              <img src="https://covers.openlibrary.org/b/isbn/<%= isbn[i] %>-M.jpg" class="card-img-top" alt="<%= name[i] %>">
+            <% } else {%>
+              <img src="assets/images/<%=localISBN[i]%>.jpg" class="card-img-top" alt="<%= name[i] %>">
+            <% } %>
+            <div class="card-body d-flex flex-column">
+              <p class="card-text"><small class="text-muted"><%= genre[i] %></small></p>
+              <h5 class="card-title"><%= name[i] %></h5>
+              <p class="card-text">By <%= author[i] %></p>
+              <!--Rating-->
+              <p>
+              <% for(var j=0;j<Math.floor(rating[i]);j++){ %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=#FFC100 class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+              <% } %>
+              <% if(rating[i] - Math.floor(rating[i])) {%>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=#FFC100 class="bi bi-star-half" viewBox="0 0 16 16">
+                  <path d="M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z"/>
+                </svg>
+                <% } %>
+                <% for(var j=0;j<5-Math.round(rating[i]);j++){ %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=#FFC100 class="bi bi-star" viewBox="0 0 16 16">
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                  </svg>
+                <% } %>
+              </p>
+              <!--Rating end-->
+              <% if(isbn[i]!=-1){ %>
+                <a href="/details?isbn=<%= isbn[i] %>" class="btn btn-primary mt-auto">Read My Take
+            <% } else { %>
+                <a href="/details?isbn=<%= localISBN[i] %>" class="btn btn-primary mt-auto">Read My Take
+            <% } %>
+            </a>
+              
+            </div>
+          </div>
+          </a>
+        </div>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info" role="alert">
+      Book Not Found
+    </div>
+  <% } %>
+</div>
+    
+
+<%- include('partials/footer.ejs'); %>

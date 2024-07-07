@@ -1,0 +1,66 @@
+#readers{
+    background: linear-gradient(to right, #0C1844, #C80036, #FF6969);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+body{
+    background-color: #f0f0f0;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-20px);
+}
+
+.header_pop{
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.header_pop:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*will it work? noone*/
+.book-cover-container {
+  max-width: 300px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.book-cover-container:hover {
+  transform: scale(1.05);
+}
+
+.book-cover {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (max-width: 767px) {
+  .book-cover-container {
+      max-width: 200px;
+      margin-top: 2rem;
+  }
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
