@@ -69,7 +69,7 @@
           <% } %>
           <div class="card h-100">
             <% if(isbn[i]!=-1){ %>
-              <img src="https://covers.openlibrary.org/b/isbn/<%= isbn[i] %>-M.jpg" class="card-img-top" alt="<%= name[i] %>">
+              <img src="https://covers.openlibrary.org/b/isbn/<%=isbn[i] %>-M.jpg" class="card-img-top" alt="<%= name[i] %>">
             <% } else {%>
               <img src="assets/images/<%=localISBN[i]%>.jpg" class="card-img-top" alt="<%= name[i] %>">
             <% } %>
@@ -97,9 +97,9 @@
               </p>
               <!--Rating end-->
               <% if(isbn[i]!=-1){ %>
-                <a href="/details?isbn=<%= isbn[i] %>" class="btn btn-primary mt-auto">Read My Take
+                <a href="/details?isbn=<%=isbn[i]%>" class="btn btn-primary mt-auto">Read My Take
             <% } else { %>
-                <a href="/details?isbn=<%= localISBN[i] %>" class="btn btn-primary mt-auto">Read My Take
+                <a href="/details?isbn=<%=localISBN[i]%>" class="btn btn-primary mt-auto">Read My Take
             <% } %>
             </a>
               

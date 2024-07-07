@@ -48,5 +48,5 @@ PORT="3000"
 ````bash
 node index.js
 ````
-6. Usage
+6. Usage:
 Visit http://localhost:3000 in your browser to start the quiz.
