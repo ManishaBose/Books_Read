@@ -33,7 +33,7 @@ async function readData(sortOrder = 'id', genre='',search=''){
         } else if(genre){ 
             result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books WHERE genre = '${genre}' ORDER BY ${sortOrder}`);
         } else if(search){
-            result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books WHERE LOWER(name) LIKE LOWER($1) ORDER BY ${sortOrder}`,[`%${search}%`]);
+            result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books WHERE LOWER(name) LIKE LOWER($1) ORDER BY ${sortOrder}`,[`%${search.trim()}%`]);
         }
         const arr = result.rows;
         arr.forEach(element => {
