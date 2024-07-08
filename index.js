@@ -89,44 +89,50 @@ async function readDetail(identity) {
 
 app.get("/",async (req,res)=>{
     const books = await readData();
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"Welcome to Manisha's Book Showcase!", isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/rating", async (req,res) => {
     const books = await readData('rating DESC');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"Sorted by rating",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/alphabetically", async (req,res) => {
     const books = await readData('name');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"Sorted lexicographycally",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/fiction", async(req,res) =>{
     const books = await readData('rating DESC','fiction');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"FICTION",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/nonfiction", async(req,res) =>{
     const books = await readData('rating DESC','nonfiction');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"NON-FICTION",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/autobiography", async(req,res) =>{
     const books = await readData('rating DESC','autobiography');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"AUTOBIOGRAPHY",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/selfhelp", async(req,res) =>{
     const books = await readData('rating DESC','self-help');
-    res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    res.render("index.ejs",{title:"SELF-HELP",isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
 });
 
 app.get("/search", async(req,res) =>{
     const search = req.query.search;
     const books = await readData('rating','',search);
-    if(books){
-        res.render("index.ejs",{isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
+    console.log(books);
+    var title;
+    if(books.isbn.length>1){
+        title = "Search Completed...";
+    } else
+    title = books.name[0];
+    if(books){ //to do books.name[0]
+        res.render("index.ejs",{title:title ,isbn:books.isbn, genre:books.genre, name:books.name, author:books.author, rating:books.rating, localISBN:books.localISBN});
     }
     else
         res.render("index.ejs");
@@ -136,7 +142,6 @@ app.get("/details",async(req,res)=>{
     const books = await readData();
     const identity = req.query.isbn;
     const book_detail = await readDetail(identity);
-    console.log(book_detail);
     res.render("review.ejs",{isbn:books.isbn, isbn_web:book_detail.isbn, localISBN:book_detail.localISBN, name: book_detail.name, author: book_detail.author, rating: book_detail.rating});
 });
 
