@@ -17,7 +17,7 @@ db.connect();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-async function readData(sortOrder = 'id', genre='',search=''){
+async function readData(sortOrder = 'read_on', genre='',search=''){
     var books = {
         isbn: [],
         name: [],
@@ -29,7 +29,7 @@ async function readData(sortOrder = 'id', genre='',search=''){
     try{
         let result;
         if(!genre && !search){
-            result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books ORDER BY ${sortOrder}`);
+            result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books ORDER BY ${sortOrder} desc nulls last`);
         } else if(genre){ 
             result = await db.query(`SELECT isbn, name, author, rating, genre, local_img_isbn FROM books WHERE genre = '${genre}' ORDER BY ${sortOrder}`);
         } else if(search){
